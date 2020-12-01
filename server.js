@@ -10,3 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(patht.join(__dirname, "Develop/public")));
 
+app.get("api/notes", function(err, res) {
+    try {
+        
+    }
+})
