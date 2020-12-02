@@ -1,16 +1,17 @@
-const express = require("express");
-const path = require("path");
-const fs = require("fs");
-const app = express();
-const PORT = process.env.PORT || 9999
+var express = require("express");
+var path = require("path");
+var fs = require("fs");
+var app = express();
+
+var PORT = 3030;
 
 let theNotes = [];
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(patht.join(__dirname, "Develop/public")));
+app.use(express.static(path.join(__dirname, "Develop/public")));
 
-app.get("api/notes", function(err, res) {
+app.get("/api/notes", function(err, res) {
     try {
         theNotes = fs.readFileSync("Develop/db/db.json", "utf8");
         console.log("Natey Notetaker is here to help");
@@ -27,6 +28,7 @@ app.get("api/notes", function(err, res) {
 app.post("/api/notes", function(req, res) {
     try {
         theNotes = fs.readFileSync("./Develop/db/db.json", "utf8");
+        console.log(theNotes);
         theNotes = JSON.parse(theNotes);
         req.body.id = theNotes.length;
         theNotes.push(req.body);
@@ -67,3 +69,10 @@ app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "Develop/public/index.html"));
   });
 
+app.get("/api/notes", function(req, res) {
+    return res.sendFile(path.json(__dirname, "Develop/db/db.json"));
+  });
+
+app.listen(PORT, function() {
+    console.log("We're ready to go!  Head to localhost:" + PORT);
+  });
