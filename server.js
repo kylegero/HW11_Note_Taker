@@ -21,3 +21,26 @@ app.get("api/notes", function(err, res) {
     }
     res.json(theNotes);
 });
+
+
+//
+app.post("/api/notes", function(req, res) {
+    try {
+        theNotes = fs.readFileSync("./Develop/db/db.json", "utf8");
+        theNotes = JSON.parse(theNotes);
+        req.body.id = theNotes.length;
+        theNotes.push(req.body);
+        theNotes = JSON.stringify(theNotes);
+        fs.writeFile("./Develop/db/db.json", theNotes, "utf8", function(err) {
+            if (err) throw err;
+        });
+        res.json(JSON.parse(theNotes));
+    } catch (err) {
+        throw err;
+        console.error(err);
+    }
+});
+
+app.delete("/api/notes/:id", function(req, res) {
+    
+})
